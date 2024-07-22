@@ -131,7 +131,7 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ korean_input: koreanInput }),
+                    body: JSON.stringify({ english_input: koreanInput }),
                 });
 
                 if (!response.ok) {
@@ -139,11 +139,9 @@
                 }
 
                 const result = await response.json();
-                document.getElementById('translated_message').innerHTML = md.render(result.translated_message);
                 document.getElementById('final_message').innerHTML = md.render(result.final_message);
             } catch (error) {
                 console.error('There was a problem with the fetch operation:', error);
-                document.getElementById('translated_message').textContent = 'Error fetching translation';
                 document.getElementById('final_message').textContent = 'Error fetching translation';
             } finally {
                 loadingContainer.style.display = 'none'; // 로딩 중 애니메이션 및 메시지 숨기기

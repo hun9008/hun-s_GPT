@@ -2,7 +2,7 @@
 
 This is Personal LLM Service.
 
-serving url : <a>http://pepper.hunian.site:8080</a>
+serving url : <a>http://gpt.hunian.site</a>
 
 | Base Model | Llama3:8B |
 | --- | --- |

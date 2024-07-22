@@ -26,11 +26,11 @@ app.add_middleware(
 templates = Jinja2Templates(directory="templates")
 
 # 모델 인스턴스 생성
-llm = ChatOllama(model="llama3:8b")
+llm = ChatOllama(model="internlm2:latest")
 
 # Pydantic 모델 정의
 class InputMessage(BaseModel):
-    korean_input: str
+    english_input: str
 
 # 첫 번째 체인 설정
 prompt1 = ChatPromptTemplate.from_template("[{korean_input}] translate the question into English. Don't say anything else, just translate it.")
@@ -42,7 +42,7 @@ chain1 = (
 
 # 두 번째 체인 설정
 prompt2 = ChatPromptTemplate.from_messages([
-    ("system", "You are a helpful, professional assistant. "),
+    ("system", "You are a kind mathmetic teacher. "),
     ("user", "{input}")
 ])
 chain2 = (
@@ -61,19 +61,15 @@ async def read_root(request: Request):
 async def translate(input_message: InputMessage):
     try:
         # 첫 번째 체인 처리
-        translated_message = chain1.invoke({"korean_input": input_message.korean_input})
+        # translated_message = chain1.invoke({"korean_input": input_message.korean_input})
         
         # 두 번째 체인 처리
-        final_message = chain2.invoke({"input": translated_message})
+        final_message = chain2.invoke({"input": input_message.english_input})
         
         return {
-            "translated_message": translated_message,
             "final_message": final_message
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# FastAPI 서버 실행
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+
