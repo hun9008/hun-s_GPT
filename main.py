@@ -60,10 +60,10 @@ async def read_root(request: Request):
 @app.post("/translate")
 async def translate(input_message: InputMessage):
     try:
-        # 첫 번째 체인 처리
+        # 첫 번째 체인
         # translated_message = chain1.invoke({"korean_input": input_message.korean_input})
         
-        # 두 번째 체인 처리
+        # 두 번째 체인 
         final_message = chain2.invoke({"input": input_message.english_input})
         
         return {
